@@ -1,0 +1,14 @@
+stock_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "sfedu02-lvb17920"
+      user: "LEMUR"
+      password: "Sunnyritika3009"
+      role: "TRAINING_ROLE"
+      database: "USER_DB_LEMUR"
+      warehouse: "LEMUR_QUERY_WH"
+      schema: "ANALYTICS"
+      threads: 4
+      client_session_keep_alive: False
