@@ -9,12 +9,16 @@ The pipeline computes essential technical indicators such as Moving Averages (MA
         
 Data Source Layer
            YFinance API
+           
 Orchestration Layer
            Airflow ETL + Airflow dbt tasks
+           
 Data Warehouse Layer
            Snowflake (RAW → STAGING → INTERMEDIATE → MART → SNAPSHOT)
+           
 Transformation Layer
            dbt models (stg_stock_data, moving_averages, rsi, stock_analytics_mart)
+           
 Analytics Layer
            BI Dashboard (Superset/Tableau)
 
