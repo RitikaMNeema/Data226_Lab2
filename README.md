@@ -51,9 +51,15 @@ Analytics Layer
 - Reproducible transformations & documentation with dbt
 
 **Prerequisites**
+
 Python 3.8+
+
 Apache Airflow 2.x
+
 Snowflake account
+
 dbt Core 1.10+
+
 Docker & Docker Compose
+
 Git
