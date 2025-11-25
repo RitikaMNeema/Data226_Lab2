@@ -4,8 +4,8 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.empty import EmptyOperator
 
-DBT_PROJECT_DIR = "/opt/airflow/dags/dbt"
 DBT_PROFILES_DIR = "/opt/airflow/dags/dbt"
+DBT_PROJECT_DIR = Variable.get("dbt_project_dir", default_var="/opt/airflow/dbt")
 ETL_SCRIPT = "/opt/airflow/dags/yfinance_etl.py"
 
 
