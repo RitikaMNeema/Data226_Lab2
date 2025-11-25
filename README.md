@@ -1,15 +1,76 @@
-Welcome to your new dbt project!
+**Overview**
+This project implements a complete end-to-end ELT data analytics system using Apache Airflow, Snowflake, dbt, and a BI dashboard (Superset/Tableau).
 
-### Using the starter project
+It automates the extraction of historical stock data from the Yahoo Finance API, loads it into the Snowflake cloud data warehouse, transforms it using dbt’s staged modeling approach (staging → intermediate → mart), orchestrates these workflows with Airflow, and visualizes insights through interactive dashboards.
 
-Try running the following commands:
-- dbt run
-- dbt test
+The pipeline computes essential technical indicators such as Moving Averages (MA3, MA7, MA30), RSI, momentum, and volatility, enabling deeper trend analysis and informed decision-making.
 
+**Architecture:**
+           ┌─────────────────────┐
+          │   YFinance API      │
+          └─────────┬───────────┘
+                    │
+                    ▼
+         ┌───────────────────────┐
+         │   Airflow ETL (Lab1)  │
+         │ yfinance_etl.py       │
+         └─────────┬─────────────┘
+                    │ RAW Load
+                    ▼
+     ┌─────────────────────────────────┐
+     │   Snowflake: RAW.STOCK_DATA_LAB │
+     └─────────┬──────────────────────┘
+               │ dbt Transformations
+               ▼
+  ┌────────────────────────────────────────────┐
+  │ dbt Models                                 │
+  │  • stg_stock_data                          │
+  │  • moving_averages (MA3/7/30, momentum)    │
+  │  • rsi (RSI14)                              │
+  │  • stock_analytics_mart                    │
+  └─────────┬──────────────────────────────────┘
+            │ Final Mart
+            ▼
+    ┌────────────────────────────────┐
+    │   BI Dashboard (Superset)     │
+    │   • MA charts                 │
+    │   • RSI chart                 │
+    │   • Volatility / Momentum     │
+    └───────────────────────────────┘
+    
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+**Features**
+- Automated ELT Pipeline
+- Daily scheduled extraction and processing
+- Automated dbt transformations and tests
+- End-to-end workflow orchestration using Airflow
+
+**Technical Analysis Metrics**
+- Simple Moving Averages: MA3, MA7, MA30
+- RSI (14-period)
+- Price Momentum & Price Change
+- Volatility (rolling standard deviation)
+
+**Data Quality & Governance**
+- dbt unique and not_null tests
+- dbt_utils-based column tests
+- Historical tracking with dbt SCD2 snapshot
+
+**Visualization**
+- Real-time dashboards for technical indicators
+- Interactive filtering (symbol, date range)
+- Charts for MA trends, RSI, volatility, and momentum
+
+**Architecture Benefits**
+- Modular and scalable design
+- Easy to extend with new indicators
+- Idempotent and reliable Snowflake transactions
+- Reproducible transformations & documentation with dbt
+
+**Prerequisites**
+Python 3.8+
+Apache Airflow 2.x
+Snowflake account
+dbt Core 1.10+
+Docker & Docker Compose
+Git
