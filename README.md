@@ -6,38 +6,17 @@ It automates the extraction of historical stock data from the Yahoo Finance API,
 The pipeline computes essential technical indicators such as Moving Averages (MA3, MA7, MA30), RSI, momentum, and volatility, enabling deeper trend analysis and informed decision-making.
 
 **Architecture:**
-           ┌─────────────────────┐
-          │   YFinance API      │
-          └─────────┬───────────┘
-                    │
-                    ▼
-         ┌───────────────────────┐
-         │   Airflow ETL (Lab1)  │
-         │ yfinance_etl.py       │
-         └─────────┬─────────────┘
-                    │ RAW Load
-                    ▼
-     ┌─────────────────────────────────┐
-     │   Snowflake: RAW.STOCK_DATA_LAB │
-     └─────────┬──────────────────────┘
-               │ dbt Transformations
-               ▼
-  ┌────────────────────────────────────────────┐
-  │ dbt Models                                 │
-  │  • stg_stock_data                          │
-  │  • moving_averages (MA3/7/30, momentum)    │
-  │  • rsi (RSI14)                              │
-  │  • stock_analytics_mart                    │
-  └─────────┬──────────────────────────────────┘
-            │ Final Mart
-            ▼
-    ┌────────────────────────────────┐
-    │   BI Dashboard (Superset)     │
-    │   • MA charts                 │
-    │   • RSI chart                 │
-    │   • Volatility / Momentum     │
-    └───────────────────────────────┘
-    
+        
+Data Source Layer
+           YFinance API
+Orchestration Layer
+           Airflow ETL + Airflow dbt tasks
+Data Warehouse Layer
+           Snowflake (RAW → STAGING → INTERMEDIATE → MART → SNAPSHOT)
+Transformation Layer
+           dbt models (stg_stock_data, moving_averages, rsi, stock_analytics_mart)
+Analytics Layer
+           BI Dashboard (Superset/Tableau)
 
 **Features**
 - Automated ELT Pipeline
